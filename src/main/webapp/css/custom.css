@@ -20,3 +20,17 @@ ng-hide {
 	right: 0;
 	margin: auto;
 }
+
+ul.calendarfooterInfo{float:left;margin:0 0 10px 287px;padding-top:10px;*margin:45px 0 10px 20px;}
+ul.calendarfooterInfo li{display:inline;font:11px Verdana;color:#7A5800;padding:0 11px 0 17px;}
+ul.calendarfooterInfo li.availableText{background:url(../img/availableBox.gif) no-repeat;width:15px;height:11px;}
+
+ul.calendarfooterInfo li.selectedDateText{background:url(../img/selectedDateBox.gif) no-repeat;width:15px;height:11px;}
+ul.calendarfooterInfo li.promotionText{background:url(../img/promotionBox.gif) no-repeat;width:15px;height:11px;}
+ul.calendarfooterInfo li.rejected{background:url(../img/noArrivalsBox.gif) no-repeat;width:15px;height:11px;}
+
+.available{background-color: #FFFFFF; }
+.selectedDate{background-color:#FFDD80;}
+.submittedDate{background-color:#00FFFF;cursor:default;pointer-events: none;}
+.promotion{background-color: #E77471;cursor:default;pointer-events: none;}
+.rejected{background-color:#7F4A52;}

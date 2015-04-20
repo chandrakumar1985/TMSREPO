@@ -1,17 +1,18 @@
+
 <div class="pull-right">
-	<a href="#!/create" class="btn btn-default" ng-show="hasRole('admin')" title="Create"><span class="glyphicon glyphicon-plus"></span></a>
+    <a href="#!/createUser" class="btn btn-default" ng-show="hasRole('admin')" title="Create User"><span class="glyphicon glyphicon-plus"></span></a>
 </div>
 <div class="page-header">
-	<h3>News</h3>
+	<h3>User</h3>
 </div>
 
-<div ng-repeat="newsEntry in newsEntries">
+<div ng-repeat="userEntry in userEntries">
 	<hr />
 	<div class="pull-right">
-		<a href="" ng-click="deleteEntry(newsEntry)" class="btn btn-xs btn-default" ng-show="hasRole('admin')" title="delete"><span class="glyphicon glyphicon-trash"></span></a>
-		<a href="#!/edit/{{newsEntry.id}}" class="btn btn-xs btn-default" ng-show="hasRole('admin')" title="edit"><span class="glyphicon glyphicon-pencil"></span></a>
+		<a href="" ng-click="deleteEntry(userEntry)" class="btn btn-xs btn-default" ng-show="hasRole('admin')" title="delete"><span class="glyphicon glyphicon-trash"></span></a>
+		<a href="#!/edit/{{userEntry.id}}" class="btn btn-xs btn-default" ng-show="hasRole('admin')" title="edit"><span class="glyphicon glyphicon-pencil"></span></a>
 	</div>
-	<h4>{{newsEntry.date | date}}</h4>
-	<p>{{newsEntry.content}}</p>
+	<h4>{{userEntry.username}}</h4>
+	
 </div>
 <hr />
