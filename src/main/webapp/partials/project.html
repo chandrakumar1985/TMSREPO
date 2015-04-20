@@ -1,0 +1,18 @@
+
+<div class="pull-right" ng-show="hasRole('admin')">
+    <a href="#!/addproject" class="btn btn-default" ng-show="hasRole('admin')" title="Create Project"><span class="glyphicon glyphicon-plus"></span></a>
+</div>
+<div class="page-header" ng-show="hasRole('admin')">
+	<h3>Project </h3>
+</div>
+
+<div ng-repeat="projectEntry in projectEntries" ng-show="hasRole('admin')">
+	<hr />
+	<div class="pull-right">
+		<a href="" ng-click="deleteEntry(projectEntry)" class="btn btn-xs btn-default" ng-show="hasRole('admin')" title="delete"><span class="glyphicon glyphicon-trash"></span></a>
+		<a href="#!/editproject/{{projectEntry.id}}" class="btn btn-xs btn-default" ng-show="hasRole('admin')" title="edit"><span class="glyphicon glyphicon-pencil"></span></a>
+	</div>
+	<h4>{{projectEntry.projectName}}</h4>
+	
+</div>
+<hr />

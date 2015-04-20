@@ -1,0 +1,49 @@
+<div class="page-header">
+	<h3>Add TMS for Date</h3>
+</div>
+<div ng-show="error">
+		Please fill the mandatory fields.
+</div>
+<form class="form-horizontal" name="tmsForm">
+		
+	<table class="table">
+		
+		<tr>
+		<th>Project Name*</th>
+		<th>Activity Name*</th>
+		<th>No Of Hours*</th>
+		<th>Remarks</th>
+	    </tr>
+		
+		<tr ng-repeat='utms in userTMS'>
+		
+		   <td>
+			<select data-ng-model="utms.projectName" ng-change="change(utms);">
+            <option ng-repeat='opt in utms.projectOptions' value='{{opt.projectName}}'>{{opt.projectName}}</option>
+            </select>
+		   </td>
+		
+		
+		   <td>
+		     <select data-ng-model="utms.activityName">
+                <option ng-repeat='opt1 in utms.projectActivitiesDrpDN' value='{{opt1.name}}'>{{opt1.name}}</option>
+            </select>
+		   </td>
+		
+		   <td>
+			<input ng-model="utms.noOfHours" id="noOfHours" class="form-control" value={{utms.noOfHours}} required/>
+		  </td>
+		  <td>
+			<input ng-model="utms.userRemarks" id="userRemarks" class="form-control" value={{utms.userRemarks}} />
+		  </td>
+		  
+		</tr>
+	
+	</table>
+	<div class="form-group">
+		
+		<div class="col-sm-10 col-sm-offset-2">
+			<button type="submit" class="btn btn-primary" ng-click="addRow()"><span class="glyphicon glyphicon-ok"></span> Add New Row</button> <button type="submit" class="btn btn-primary" ng-click="save('save')"><span class="glyphicon glyphicon-ok"></span> Save</button> <button type="submit" class="btn btn-primary" ng-click="save('submit')"><span class="glyphicon glyphicon-ok"></span> Submit</button>
+		</div>
+	</div>
+</form>

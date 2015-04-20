@@ -1,0 +1,46 @@
+
+<div class="page-header">
+	<h3>Monthly Timesheet For Month {{calendar.month}}</h3>
+</div>
+
+
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>SUN</th>
+            <th>MON</th>
+            <th>TUE</th>
+            <th>WED</th>
+            <th>THU</th>
+            <th>FRI</th>
+            <th>SAT</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="weeklyData in calendar.weeklyCalendar">
+            <td class="{{weeklyData.firstDay.columnClass}}"><a href="#!/addtms?&year={{calendar.year}}&month={{calendar.monthNo}}&day={{weeklyData.firstDay.day}}"><span ng-hide="{{weeklyData.firstDay.day}} === 0">{{weeklyData.firstDay.day}}</span></a></td>
+            <td class="{{weeklyData.secondDay.columnClass}}"><a href="#!/addtms?&year={{calendar.year}}&month={{calendar.monthNo}}&day={{weeklyData.secondDay.day}}"><span ng-hide="{{weeklyData.secondDay.day}} === 0">{{weeklyData.secondDay.day}}</span></a></td>
+            <td class="{{weeklyData.thirdDay.columnClass}}"><a href="#!/addtms?&year={{calendar.year}}&month={{calendar.monthNo}}&day={{weeklyData.thirdDay.day}}"><span ng-hide="{{weeklyData.thirdDay.day}} === 0">{{weeklyData.thirdDay.day}}</span></a></td>
+            <td class="{{weeklyData.fourthDay.columnClass}}"><a href="#!/addtms?&year={{calendar.year}}&month={{calendar.monthNo}}&day={{weeklyData.fourthDay.day}}"><span ng-hide="{{weeklyData.fourthDay.day}} === 0">{{weeklyData.fourthDay.day}}</span></a></td>
+            <td class="{{weeklyData.fifthDay.columnClass}}"><a href="#!/addtms?&year={{calendar.year}}&month={{calendar.monthNo}}&day={{weeklyData.fifthDay.day}}"><span ng-hide="{{weeklyData.fifthDay.day}} === 0">{{weeklyData.fifthDay.day}}</span></a></td>
+            <td class="{{weeklyData.sixthDay.columnClass}}"><a href="#!/addtms?&year={{calendar.year}}&month={{calendar.monthNo}}&day={{weeklyData.sixthDay.day}}"><span ng-hide="{{weeklyData.sixthDay.day}} === 0">{{weeklyData.sixthDay.day}}</span></a></td>
+            <td class="{{weeklyData.seventhDay.columnClass}}"><a href="#!/addtms?&year={{calendar.year}}&month={{calendar.monthNo}}&day={{weeklyData.seventhDay.day}}"><span ng-hide="{{weeklyData.seventhDay.day}} === 0">{{weeklyData.seventhDay.day}}</span></a></td>
+        </tr>
+        
+    </tbody>
+    <tfoot>
+    <ul class="calendarfooterInfo">
+			<li class="availableText">TMS Not Entered</li>
+			<li class="selectedDateText">TMS Saved</li>
+			<li class="selectedDateText">TMS Submitted</li>
+			<li class="promotionText">Approved</li>
+			<li class="rejected">Rejected</li>
+			
+	</ul>
+    </tfoot>
+</table>
+
+
+
+<hr />

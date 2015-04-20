@@ -1,0 +1,50 @@
+<div class="page-header">
+	<h3>Add TMS for Date</h3>
+</div>
+<div ng-show="error">
+		Please fill the mandatory fields.
+</div>
+<form class="form-horizontal" name="tmsForm">
+		
+	<table class="table">
+		
+		<tr>
+		<th>Project Name*</th>
+		<th>Activity Name*</th>
+		<th>Date*</th>
+		<th>No Of Hours*</th>
+		<th>User Remarks</th>
+		<th>Approver Remarks</th>
+		<th>Approve Reject</th>
+		
+	    </tr>
+		
+		<tr ng-repeat='utms in userTMS' ng-hide="utms.approved || utms.rejected">
+		
+		   <td>
+			{{utms.projectName}}
+		   </td>
+		   <td >
+		     {{utms.tmsDate}}
+		   </td>
+			<td >
+		     {{utms.activityName}}
+		   </td>
+		   <td >
+			{{utms.noOfHours}}
+		  </td>
+		  <td >
+			{{utms.userRemarks}}
+		  </td>
+		  <td >
+			<input ng-model="utms.approverRemarks" id="approverRemarks" class="form-control" value={{utms.approverRemarks}} />
+		  </td>
+		  <td >
+		  <button type="submit" class="btn btn-primary" ng-click="save('approved',utms)"><span class="glyphicon glyphicon-ok"></span> Approve</button> <button type="submit" class="btn btn-primary" ng-click="save('rejected',utms)"><span class="glyphicon glyphicon-ok"></span> Reject</button> 
+		  </td>
+		  
+		</tr>
+	
+	</table>
+	
+</form>
