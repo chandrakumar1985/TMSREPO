@@ -18,9 +18,8 @@
         http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
         http://www.springframework.org/schema/data/mongo http://www.springframework.org/schema/data/mongo/spring-mongo-1.0.xsd">
 
-        <context:property-placeholder />
         <!-- MongoBD Database configuration host and port -->
-        <mongo:mongo host="localhost" port="27017" />
+        <mongo:mongo host="127.2.189.130" port="27017" />
         
         
         <!-- Define the mongoDbFactory with your database Name  -->
