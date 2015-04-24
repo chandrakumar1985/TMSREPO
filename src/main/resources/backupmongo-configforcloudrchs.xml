@@ -18,20 +18,39 @@
         http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
         http://www.springframework.org/schema/data/mongo http://www.springframework.org/schema/data/mongo/spring-mongo-1.0.xsd">
 
+        <context:property-placeholder/>
+        <!-- MongoBD Database configuration host and port
+        <mongo:mongo host="${OPENSHIFT_MONGODB_DB_HOST}" port="27017" /> -->
+
         <!-- MongoBD Database configuration host and port -->
-        <mongo:mongo host="localhost" port="27017" />
+        <mongo:mongo host="127.2.189.130" port="27017" />
         
         
-        <!-- Define the mongoDbFactory with your database Name  -->
+        <!-- Define the mongoDbFactory with your database Name --> 
 		<mongo:db-factory dbname="test" />
  
- 		<!-- Define the MongoTemplate  -->
+ 		 
 		<bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
 			<constructor-arg name="mongoDbFactory" ref="mongoDbFactory" />
-		</bean>  
+		</bean> 
+		<!-- Define the MongoTemplate 
+<bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
+    <constructor-arg name="mongo" ref="mongo"/>
+    <constructor-arg name="databaseName" value="hanuapps"/>
+    <constructor-arg name="userCredentials" ref="mongoCredentials"/>
+    <property name="writeConcern">  
+    <util:constant static-field="com.mongodb.WriteConcern.NORMAL" />  
+</property> 
+</bean>		
+
+<bean id="mongoCredentials" class="org.springframework.data.authentication.UserCredentials">
+    <constructor-arg name="username" value="admin" />
+    <constructor-arg name="password" value="SYn9e_Zqi7T5" />
+</bean>-->
  		
  		<!-- Base package to scan the mongo repositories, where we create de DAOS to access data and domain objects -->
         
-
+<!-- Base package to scan the mongo repositories, where we create de DAOS to access data and domain objects -->
+        <mongo:repositories base-package="com.accion.tms" />
 
 </beans>
