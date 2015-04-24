@@ -2,7 +2,25 @@
 <div class="page-header">
 	<h3>Monthly Timesheet For Month {{calendar.month}}</h3>
 </div>
-
+<div class="container">
+    <section>
+        <ul class="nav nav-pills">
+            <li ng-class="{active:isSet('addtms')}"><a href ng-click="setTab('addtms')">Day</a></li>
+            <li ng-class="{active:isSet('month')}"><select data-ng-model="month" ng-change="change();">
+            <option ng-repeat='opt in monthOptions' value='{{opt.monthno}}'>{{opt.monthname}}</option>
+            </select></li>
+            <li ng-class="{active:isSet('addweektms')}"><a href ng-click="setTab('addweektms')">Week</a></li>
+        </ul>
+        
+        <div ng-show="isSet('addtms')">
+             <h4>Enter timesheet based on Day</h4>
+        </div>
+        <div ng-show="isSet('addweektms')">
+             <h4>Enter timesheet based on Week</h4>
+        </div>
+        
+    </section>
+</div>
 
 
 <table class="table table-bordered">
@@ -19,13 +37,13 @@
     </thead>
     <tbody>
         <tr ng-repeat="weeklyData in calendar.weeklyCalendar">
-            <td class="{{weeklyData.firstDay.columnClass}}"><a href="#!/addtms?&year={{calendar.year}}&month={{calendar.monthNo}}&day={{weeklyData.firstDay.day}}"><span ng-hide="{{weeklyData.firstDay.day}} === 0">{{weeklyData.firstDay.day}}</span></a></td>
-            <td class="{{weeklyData.secondDay.columnClass}}"><a href="#!/addtms?&year={{calendar.year}}&month={{calendar.monthNo}}&day={{weeklyData.secondDay.day}}"><span ng-hide="{{weeklyData.secondDay.day}} === 0">{{weeklyData.secondDay.day}}</span></a></td>
-            <td class="{{weeklyData.thirdDay.columnClass}}"><a href="#!/addtms?&year={{calendar.year}}&month={{calendar.monthNo}}&day={{weeklyData.thirdDay.day}}"><span ng-hide="{{weeklyData.thirdDay.day}} === 0">{{weeklyData.thirdDay.day}}</span></a></td>
-            <td class="{{weeklyData.fourthDay.columnClass}}"><a href="#!/addtms?&year={{calendar.year}}&month={{calendar.monthNo}}&day={{weeklyData.fourthDay.day}}"><span ng-hide="{{weeklyData.fourthDay.day}} === 0">{{weeklyData.fourthDay.day}}</span></a></td>
-            <td class="{{weeklyData.fifthDay.columnClass}}"><a href="#!/addtms?&year={{calendar.year}}&month={{calendar.monthNo}}&day={{weeklyData.fifthDay.day}}"><span ng-hide="{{weeklyData.fifthDay.day}} === 0">{{weeklyData.fifthDay.day}}</span></a></td>
-            <td class="{{weeklyData.sixthDay.columnClass}}"><a href="#!/addtms?&year={{calendar.year}}&month={{calendar.monthNo}}&day={{weeklyData.sixthDay.day}}"><span ng-hide="{{weeklyData.sixthDay.day}} === 0">{{weeklyData.sixthDay.day}}</span></a></td>
-            <td class="{{weeklyData.seventhDay.columnClass}}"><a href="#!/addtms?&year={{calendar.year}}&month={{calendar.monthNo}}&day={{weeklyData.seventhDay.day}}"><span ng-hide="{{weeklyData.seventhDay.day}} === 0">{{weeklyData.seventhDay.day}}</span></a></td>
+            <td class="{{weeklyData.firstDay.columnClass}}"><a href="#!/{{tab}}?&year={{calendar.year}}&month={{calendar.monthNo}}&day={{weeklyData.firstDay.day}}"><span ng-hide="{{weeklyData.firstDay.day}} === 0">{{weeklyData.firstDay.day}}</span></a></td>
+            <td class="{{weeklyData.secondDay.columnClass}}"><a href="#!/{{tab}}?&year={{calendar.year}}&month={{calendar.monthNo}}&day={{weeklyData.secondDay.day}}"><span ng-hide="{{weeklyData.secondDay.day}} === 0">{{weeklyData.secondDay.day}}</span></a></td>
+            <td class="{{weeklyData.thirdDay.columnClass}}"><a href="#!/{{tab}}?&year={{calendar.year}}&month={{calendar.monthNo}}&day={{weeklyData.thirdDay.day}}"><span ng-hide="{{weeklyData.thirdDay.day}} === 0">{{weeklyData.thirdDay.day}}</span></a></td>
+            <td class="{{weeklyData.fourthDay.columnClass}}"><a href="#!/{{tab}}?&year={{calendar.year}}&month={{calendar.monthNo}}&day={{weeklyData.fourthDay.day}}"><span ng-hide="{{weeklyData.fourthDay.day}} === 0">{{weeklyData.fourthDay.day}}</span></a></td>
+            <td class="{{weeklyData.fifthDay.columnClass}}"><a href="#!/{{tab}}?&year={{calendar.year}}&month={{calendar.monthNo}}&day={{weeklyData.fifthDay.day}}"><span ng-hide="{{weeklyData.fifthDay.day}} === 0">{{weeklyData.fifthDay.day}}</span></a></td>
+            <td class="{{weeklyData.sixthDay.columnClass}}"><a href="#!/{{tab}}?&year={{calendar.year}}&month={{calendar.monthNo}}&day={{weeklyData.sixthDay.day}}"><span ng-hide="{{weeklyData.sixthDay.day}} === 0">{{weeklyData.sixthDay.day}}</span></a></td>
+            <td class="{{weeklyData.seventhDay.columnClass}}"><a href="#!/{{tab}}?&year={{calendar.year}}&month={{calendar.monthNo}}&day={{weeklyData.seventhDay.day}}"><span ng-hide="{{weeklyData.seventhDay.day}} === 0">{{weeklyData.seventhDay.day}}</span></a></td>
         </tr>
         
     </tbody>

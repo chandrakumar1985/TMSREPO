@@ -1,5 +1,5 @@
 <div class="page-header">
-	<h3>Add TMS for Date</h3>
+	<h3>Add TMS for Week starting on {{displayDate.startDate}} and ending {{displayDate.endDate}}</h3>
 </div>
 <div ng-show="error">
 		Please fill the mandatory fields.
@@ -11,13 +11,13 @@
 		<tr>
 		<th>Project</th>
 		<th>Activity</th>
-		<th>M </th>
-		<th>T </th>
-		<th>W </th>
-		<th>Th </th>
-		<th>F </th>
-		<th>S </th>
-		<th>Su </th>
+		<th>M({{displayDate.startDate}}) </th>
+		<th>T({{displayDate.secondDate}}) </th>
+		<th>W({{displayDate.thirdDate}}) </th>
+		<th>Th({{displayDate.fourthDate}}) </th>
+		<th>F({{displayDate.fifthDate}}) </th>
+		<th>S({{displayDate.sixthDate}}) </th>
+		<th>Su({{displayDate.endDate}}) </th>
 	    </tr>
 		
 		<tr ng-repeat='utms in userTMS'>
@@ -36,25 +36,25 @@
 		   </td>
 		
 		   <td>
-			<input ng-model="utms.noOfHours1" id="noOfHours1" class="form-control" value={{utms.noOfHours1}} />
+			<input ng-model="utms.noOfHoursFirstDay" id="noOfHoursFirstDay" class="form-control" value={{utms.noOfHoursFirstDay}} />
 		  </td>
 		  <td>
-			<input ng-model="utms.noOfHours2" id="noOfHours2" class="form-control" value={{utms.noOfHours2}} />
+			<input ng-model="utms.noOfHoursSecondDay" id="noOfHoursSecondDay" class="form-control" value={{utms.noOfHoursSecondDay}} />
 		  </td>
 		  <td>
-			<input ng-model="utms.noOfHours3" id="noOfHours3" class="form-control" value={{utms.noOfHours3}} />
+			<input ng-model="utms.noOfHoursThirdDay" id="noOfHoursThirdDay" class="form-control" value={{utms.noOfHoursThirdDay}} />
 		  </td>
 		  <td>
-			<input ng-model="utms.noOfHours4" id="noOfHours4" class="form-control" value={{utms.noOfHours4}} />
+			<input ng-model="utms.noOfHoursFourthDay" id="noOfHoursFourthDay" class="form-control" value={{utms.noOfHoursFourthDay}} />
 		  </td>
 		  <td>
-			<input ng-model="utms.noOfHours5" id="noOfHours5" class="form-control" value={{utms.noOfHours5}} />
+			<input ng-model="utms.noOfHoursFifthDay" id="noOfHoursFifthDay" class="form-control" value={{utms.noOfHoursFifthDay}} />
 		  </td>
 		  <td>
-			<input ng-model="utms.noOfHours6" id="noOfHours6" class="form-control" value={{utms.noOfHours6}} />
+			<input ng-model="utms.noOfHoursSixthDay" id="noOfHoursSixthDay" class="form-control" value={{utms.noOfHoursSixthDay}} />
 		  </td>
 		  <td>
-			<input ng-model="utms.noOfHours7" id="noOfHours7" class="form-control" value={{utms.noOfHours7}} />
+			<input ng-model="utms.noOfHoursSeventhDay" id="noOfHoursSeventhDay" class="form-control" value={{utms.noOfHoursSeventhDay}} />
 		  </td>
 		  
 		</tr>

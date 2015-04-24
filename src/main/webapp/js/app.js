@@ -290,6 +290,15 @@ function MonthlyTMSController($scope,$rootScope, $location, MonthlyTMSService) {
 	var date = new Date();
    //month,:year,:date,:username
 	//();
+    $scope.tab = 'addtms';
+
+    $scope.setTab = function (tabId) {
+    	$scope.tab = tabId;
+    };
+
+    $scope.isSet = function (tabId) {
+        return $scope.tab === tabId;
+    };
 	$scope.calendar = MonthlyTMSService.get({month: date.getMonth(), year:date.getFullYear(), date:date.getDate(), username:$rootScope.user.name});
 	
 	
@@ -337,7 +346,7 @@ function ApproveTMSController($scope,$rootScope, $location,$routeParams, TMSAppr
 		
 };
 
-function AddTMSController($scope,$rootScope,$q, $location,$routeParams,TMSRetrievalByDateService,  NewTMSService, ProjectActivityService, ProjectBasedOnUserService) {
+function AddTMSController($scope,$rootScope,$q, $location,$routeParams,TMSRetrievalByDateService,TMSCalendarDateService,  NewTMSService, ProjectActivityService, ProjectBasedOnUserService) {
 	
 	$scope.tms = new NewTMSService();
 	$scope.projectOptions = [];
@@ -350,7 +359,19 @@ function AddTMSController($scope,$rootScope,$q, $location,$routeParams,TMSRetrie
 	//**this code is for edit to pre populate the date and display on UI
 	
 	
-	//
+	$scope.displayDate = TMSCalendarDateService.query({month:$routeParams.month,year:$routeParams.year,date:$routeParams.day});
+	var delayedateValue = function($scope, deferredDate, value) {
+	    setTimeout(function() {
+	        $scope.$apply(function () {
+	        	deferredDate.resolve(value);
+	        	$scope.displayDate = value;  
+	        });
+	    }, 1000);
+	    return deferredDate.promise;
+	};
+	var deferredDate = $q.defer();
+	  $scope.displayDate = delayedateValue($scope, deferredDate, $scope.displayDate);
+	  
 	$scope.userTMSEdit = TMSRetrievalByDateService.query({month:$routeParams.month,year:$routeParams.year,date:$routeParams.day,username:$rootScope.user.name });
 	var delayedValue = function($scope, deferred, value) {
 	    setTimeout(function() {
@@ -477,64 +498,41 @@ function AddTMSController($scope,$rootScope,$q, $location,$routeParams,TMSRetrie
 
 
 
-function AddWeekTMSController($scope,$rootScope,$q, $location,$routeParams,TMSRetrievalByDateService,  NewTMSService, ProjectActivityService, ProjectBasedOnUserService) {
+function AddWeekTMSController($scope,$rootScope,$q, $location,$routeParams,TMSRetrievalByDateService, TMSCalendarDateService, NewWeeklyTMSService, ProjectActivityService, ProjectBasedOnUserService) {
 	
-	$scope.tms = new NewTMSService();
+	$scope.tms = new NewWeeklyTMSService();
 	$scope.projectOptions = [];
 	 //$scope.projects = [];
 	$scope.projectOptions=  ProjectBasedOnUserService.query({user: $rootScope.user.id});
 	
 	$scope.projectActivitiesDrpDN = [];
 	$scope.projectActivities = ProjectActivityService.query();
-	
-	//**this code is for edit to pre populate the date and display on UI
-	
-	
-	//
-	$scope.userTMSEdit = TMSRetrievalByDateService.query({month:$routeParams.month,year:$routeParams.year,date:$routeParams.day,username:$rootScope.user.name });
-	var delayedValue = function($scope, deferred, value) {
+	$scope.displayDate  = TMSCalendarDateService.query({month:$routeParams.month,year:$routeParams.year,date:$routeParams.day});
+	var delayedateValue = function($scope, deferredDate, value) {
 	    setTimeout(function() {
 	        $scope.$apply(function () {
-	            deferred.resolve(value);
-	            if(value.length > 0)
-	    		{
-	    	for(var i=0; i <value.length; i++)
-	    		{
-	    		$scope.userTMS = [];
-	    		$scope.userTMS.push({id:value[i].id,userTmsId:value[i].userTmsId,projectName:value[i].projectName,activityName:value[i].activityName, noOfHours:value[i].noOfHours, projectOptions:$scope.projectOptions, projectActivitiesDrpDN:[], tmsDate:$routeParams.day+"/"+$routeParams.month+"/"+$routeParams.year});
-	    		$scope.change($scope.userTMS[i]);
-	    		}
-	    		}
-	    	else
-	    		{
-	    	$scope.userTMS = [{projectName:null,activityName:null, noOfHours:null, projectOptions:$scope.projectOptions, projectActivitiesDrpDN:[], tmsDate:$routeParams.day+"/"+$routeParams.month+"/"+$routeParams.year}];
-	    		}
+	        	deferredDate.resolve(value);
+	        	$scope.displayDate = value;  
 	        });
 	    }, 1000);
-	    return deferred.promise;
+	    return deferredDate.promise;
 	};
-	
-	var deferred = $q.defer();
-	  $scope.userTMSEdit = delayedValue($scope, deferred, $scope.userTMSEdit);
-	
-	
-	
-	
-	$scope.error = false;
+	var deferredDate = $q.defer();
+	  $scope.displayDate = delayedateValue($scope, deferredDate, $scope.displayDate);
 	//$scope.roless = ['user', 'admin'];
-	
+	$scope.userTMS = [{projectName:null,activityName:null, projectOptions:$scope.projectOptions, projectActivitiesDrpDN:[], noOfHoursFirstDay:null,noOfHoursSecondDay:null,noOfHoursThirdDay:null,noOfHoursFourthDay:null,noOfHoursFifthDay:null,noOfHoursSixthDay:null,noOfHoursSeventhDay:null}];
 	$scope.save = function(method) {
-		$scope.tms.month=$routeParams.month;
-		$scope.tms.year=$routeParams.year;
-		$scope.tms.day=$routeParams.day;
-		$scope.tms.tmsDate=  $scope.tms.day + "/" + $scope.tms.month +"/"+$scope.tms.year;
+		//$scope.tms.month=$routeParams.month;
+		//$scope.tms.year=$routeParams.year;
+		//$scope.tms.day=$routeParams.day;
+		//$scope.tms.tmsDate=  $scope.tms.day + "/" + $scope.tms.month +"/"+$scope.tms.year;
 		if(method == 'save')
 		{
-			$scope.tms.saved= true;
+			//$scope.tms.saved= true;
 		}
 		else if(method == 'submit')
 		{
-			$scope.tms.submitted= true;
+			//$scope.tms.submitted= true;
 		}
 		for(var i=0; i <$scope.userTMS.length; i++)
 		{
@@ -549,12 +547,19 @@ function AddWeekTMSController($scope,$rootScope,$q, $location,$routeParams,TMSRe
 			{
 				$scope.userTMS[i].submitted = true;
 			}
-			$scope.tms.id=$scope.userTMS[i].userTmsId;
-			
+			//$scope.tms.id=$scope.userTMS[i].userTmsId;
+			$scope.userTMS[i].startDate = $scope.displayDate.startDate;
+			$scope.userTMS[i].secondDate = $scope.displayDate.secondDate;
+			$scope.userTMS[i].thirdDate = $scope.displayDate.thirdDate;
+			$scope.userTMS[i].fourthDate = $scope.displayDate.fourthDate;
+			$scope.userTMS[i].fifthDate = $scope.displayDate.fifthDate;
+			$scope.userTMS[i].sixthDate = $scope.displayDate.sixthDate;
+			$scope.userTMS[i].endDate = $scope.displayDate.endDate;
+			$scope.userTMS[i].userName=$rootScope.user.name;
 		}
-		$scope.tms.projectTMS=$scope.userTMS;
+		$scope.tms.weeklyProjectTMS=$scope.userTMS;
 		
-		$scope.tms.userName=$rootScope.user.name;
+		//$scope.tms.userName=$rootScope.user.name;
 		$scope.tms.$save(function() {
 			$location.path('/monthlytms');
 		});
@@ -564,7 +569,7 @@ function AddWeekTMSController($scope,$rootScope,$q, $location,$routeParams,TMSRe
 	
 	
 	$scope.addRow = function() {
-		$scope.userTMS.push({projectName:null,activityName:null, noOfHours:null, projectOptions:$scope.projectOptions, projectActivitiesDrpDN:[]});
+		$scope.userTMS.push({projectName:null,activityName:null, projectOptions:$scope.projectOptions, projectActivitiesDrpDN:[], noOfHoursFirstDay:null,noOfHoursSecondDay:null,noOfHoursThirdDay:null,noOfHoursFourthDay:null,noOfHoursFifthDay:null,noOfHoursSixthDay:null,noOfHoursSeventhDay:null});
 	};
 	
 	$scope.change = function(usertms) {
@@ -705,6 +710,10 @@ services.factory('NewTMSService', function($resource) {
 	
 	return $resource('rest/tms/addtms');
 });
+services.factory('NewWeeklyTMSService', function($resource) {
+	
+	return $resource('rest/tms/addweeklytms');
+});
 
 services.factory('TMSService', function($resource) {
 	
@@ -731,6 +740,15 @@ services.factory('TMSRetrievalByDateService', function($resource) {
     });
 });
 
+services.factory('TMSCalendarDateService', function($resource) {
+	
+	return $resource('rest/tms/gettmsdate/:month/:year/:date', {month: '@month',year:'@year',date:'@date'}, {
+        query: {
+            isArray: false,
+            method: 'POST'
+        }
+    });
+});
 services.factory('TMSApprovalUpdateService', function($resource) {
 	
 	return $resource('rest/tms/update');
