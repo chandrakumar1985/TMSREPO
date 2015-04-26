@@ -31,7 +31,8 @@
 		</bean>  
  		
  		<!-- Base package to scan the mongo repositories, where we create de DAOS to access data and domain objects -->
-        
+        <!-- Base package to scan the mongo repositories, where we create de DAOS to access data and domain objects -->
+        <mongo:repositories base-package="com.accion.tms" />
 
 
 </beans>

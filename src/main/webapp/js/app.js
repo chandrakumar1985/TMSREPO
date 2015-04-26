@@ -291,6 +291,8 @@ function MonthlyTMSController($scope,$rootScope, $location, MonthlyTMSService) {
    //month,:year,:date,:username
 	//();
     $scope.tab = 'addtms';
+    
+    $scope.monthOptions = [{monthno:0, monthname:'January'},{monthno:1, monthname:'February'},{monthno:2, monthname:'March'},{monthno:3, monthname:'April'},{monthno:4, monthname:'May'},{monthno:5, monthname:'June'},{monthno:6, monthname:'July'},{monthno:7, monthname:'August'},{monthno:8, monthname:'September'},{monthno:9, monthname:'October'},{monthno:10, monthname:'Novemeber'},{monthno:11, monthname:'December'}];
 
     $scope.setTab = function (tabId) {
     	$scope.tab = tabId;
@@ -298,6 +300,13 @@ function MonthlyTMSController($scope,$rootScope, $location, MonthlyTMSService) {
 
     $scope.isSet = function (tabId) {
         return $scope.tab === tabId;
+    };
+    
+    $scope.change = function()
+    {
+    	alert($scope.month);
+    	$scope.calendar = MonthlyTMSService.get({month: $scope.month, year:2015, date:1, username:$rootScope.user.name});
+    	
     };
 	$scope.calendar = MonthlyTMSService.get({month: date.getMonth(), year:date.getFullYear(), date:date.getDate(), username:$rootScope.user.name});
 	
