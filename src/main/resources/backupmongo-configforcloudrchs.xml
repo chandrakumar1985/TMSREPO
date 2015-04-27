@@ -25,7 +25,6 @@
         <!-- MongoBD Database configuration host and port -->
         <mongo:mongo host="127.2.189.130" port="27017" />
         
-        
         <!-- Define the mongoDbFactory with your database Name --> 
 		<mongo:db-factory dbname="test" />
  
