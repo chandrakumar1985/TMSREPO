@@ -3,6 +3,7 @@ package com.accion.tms.entity;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
@@ -40,6 +41,7 @@ public class User implements Entity, UserDetails
 	// = new HashSet<GrantedAuthority>();
 	
 	private Set<String> roles = new HashSet<String>();
+	private List<String> projects;
 
 
 	protected User()
@@ -95,6 +97,12 @@ public class User implements Entity, UserDetails
 	public void addRole(String role)
 	{
 		this.roles.add(role);
+	}
+	public List<String> getProjects() {
+		return projects;
+	}
+	public void setProjects(List<String> projects) {
+		this.projects = projects;
 	}
 
 
