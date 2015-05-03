@@ -1,4 +1,4 @@
-angular.module('exampleApp', ['ngRoute', 'ngCookies', 'exampleApp.services','checklist-model','dropdown-multiselect'])
+var exampleApp = angular.module('exampleApp', ['ngRoute', 'ngCookies', 'exampleApp.services','checklist-model','dropdown-multiselect'])
 	.config(
 		[ '$routeProvider', '$locationProvider', '$httpProvider', function($routeProvider, $locationProvider, $httpProvider) {
 			
@@ -55,6 +55,11 @@ angular.module('exampleApp', ['ngRoute', 'ngCookies', 'exampleApp.services','che
 				templateUrl: 'partials/project.html',
 				controller: ProjectController
 			});
+			$routeProvider.when('/pointyPieChart',
+			        {
+			            templateUrl: 'partials/PieChart.html',
+			            controller: 'PieChartController'
+			        });	
 			
 			$routeProvider.otherwise({
 				templateUrl: 'partials/index.html',
@@ -304,7 +309,6 @@ function MonthlyTMSController($scope,$rootScope, $location, MonthlyTMSService) {
     
     $scope.change = function()
     {
-    	alert($scope.month);
     	$scope.calendar = MonthlyTMSService.get({month: $scope.month, year:2015, date:1, username:$rootScope.user.name});
     	
     };

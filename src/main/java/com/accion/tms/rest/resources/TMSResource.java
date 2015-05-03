@@ -30,6 +30,7 @@ import com.accion.tms.entity.CalendarData;
 import com.accion.tms.entity.CalendarDate;
 import com.accion.tms.entity.ProjectTMS;
 import com.accion.tms.entity.UserTMS;
+import com.accion.tms.entity.PieChartVo;
 import com.accion.tms.entity.WeeklyProjectTMSVo;
 import com.accion.tms.entity.WeeklyTMSVo;
 import com.accion.tms.repository.user.TMSProjectRepositoryDao;
@@ -464,6 +465,25 @@ public class TMSResource
 		//calDate.setCurrentDate(currentDate);
 		
 		return calDate;
+	}
+	
+	@Path("getbillingchartreport/{month}/{year}/{date}/{username}")
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public List<PieChartVo> getPieChart(@PathParam("month") int month, @PathParam("year") int year,@PathParam("date") String date, @PathParam("username") String username )
+	{
+		List<PieChartVo> visitFrequencyList = new ArrayList<PieChartVo>();
+		UserTMS userTMS = tMSRepositoryDao.findByTmsDateAndUserName(date+"/"+month + "/" +year, username);
+		PieChartVo v= new PieChartVo();
+		v.setKey("billable");
+		v.setCount(3);
+		visitFrequencyList.add(v);
+		PieChartVo v1= new PieChartVo();
+		v1.setKey("nonbillable");
+		v1.setCount(1);
+		visitFrequencyList.add(v1);
+		return visitFrequencyList;
 	}
 	
 	private boolean isAdmin()
