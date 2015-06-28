@@ -76,5 +76,5 @@
 	</security:http>
     <bean id="authenticationTokenProcessingFilter" class="com.accion.tms.rest.AuthenticationTokenProcessingFilter"></bean>
 	<bean id="unauthorizedEntryPoint" class="com.accion.tms.rest.UnauthorizedEntryPoint"></bean>
- <import resource="mongo-config.xml"/>
+ <import resource="backupmongo-configforcloudrchs.xml"/>
 </beans>
