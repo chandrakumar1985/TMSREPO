@@ -1,6 +1,7 @@
 package com.accion.tms.rest.resources;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -37,7 +38,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import com.accion.tms.JsonViews;
+import com.accion.tms.entity.Project;
 import com.accion.tms.entity.User;
+import com.accion.tms.entity.UserProjectBilling;
+import com.accion.tms.repository.user.ProjectRepositoryDao;
 import com.accion.tms.repository.user.UserRepositoryDao;
 import com.accion.tms.rest.TokenUtils;
 import com.accion.tms.transfer.TokenTransfer;
@@ -60,6 +64,8 @@ public class UserResource
 	@Autowired
 	private UserRepositoryDao userRepositoryDao;
 	
+	@Autowired
+	private ProjectRepositoryDao projectRepositoryDao;
 	@Resource
 	private PasswordEncoder passwordEncoder;
 	
@@ -172,6 +178,23 @@ public class UserResource
 		
 		newsEntry.setId(UUID.randomUUID().toString());
 		newsEntry.setPassword(this.passwordEncoder.encode(newsEntry.getPassword()));
+		List<UserProjectBilling> upList = newsEntry.getUserProjectBilling();
+		for(UserProjectBilling up : upList)
+		{
+			Project prj = projectRepositoryDao.findById(up.getProjectId());
+			
+			if(prj.getProjectResources()!= null)
+			{
+				prj.getProjectResources().add(newsEntry.getId());
+			}
+			else
+			{
+				List<String> resources = new ArrayList<String>();
+				resources.add(newsEntry.getId());
+				prj.setProjectResources(resources);
+			}
+			projectRepositoryDao.save(prj);
+		}
 		return this.userRepositoryDao.save(newsEntry);
 	}
 	
@@ -183,6 +206,23 @@ public class UserResource
 	{
 		this.logger.info("update(): " + newsEntry);
 		newsEntry.setPassword(this.passwordEncoder.encode(newsEntry.getPassword()));
+		List<UserProjectBilling> upList = newsEntry.getUserProjectBilling();
+		for(UserProjectBilling up : upList)
+		{
+			Project prj = projectRepositoryDao.findById(up.getProjectId());
+			
+			if(prj.getProjectResources()!= null && !prj.getProjectResources().contains(newsEntry.getId()))
+			{
+				prj.getProjectResources().add(newsEntry.getId());
+			}
+			else
+			{
+				List<String> resources = new ArrayList<String>();
+				resources.add(newsEntry.getId());
+				prj.setProjectResources(resources);
+			}
+			projectRepositoryDao.save(prj);
+		}
 		return this.userRepositoryDao.save(newsEntry);
 	}
 

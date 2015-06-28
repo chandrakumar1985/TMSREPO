@@ -42,6 +42,17 @@ public class User implements Entity, UserDetails
 	
 	private Set<String> roles = new HashSet<String>();
 	private List<String> projects;
+	private List<UserProjectBilling> userProjectBilling;
+
+
+	public List<UserProjectBilling> getUserProjectBilling() {
+		return userProjectBilling;
+	}
+
+
+	public void setUserProjectBilling(List<UserProjectBilling> userProjectBilling) {
+		this.userProjectBilling = userProjectBilling;
+	}
 
 
 	protected User()

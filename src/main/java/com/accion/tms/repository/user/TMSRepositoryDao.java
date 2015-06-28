@@ -11,7 +11,7 @@ import com.accion.tms.entity.UserTMS;
 
 public interface TMSRepositoryDao extends CrudRepository<UserTMS, String> {
 	public UserTMS findByTmsDateAndUserName(String tmsDate, String userName);
-	public UserTMS findById(String id);
+	public UserTMS findById(String _id);
 	public List<UserTMS> findByProjectTMS_ApproverNameAndSubmitted(String approverName , boolean isSubmitted);
 
 }

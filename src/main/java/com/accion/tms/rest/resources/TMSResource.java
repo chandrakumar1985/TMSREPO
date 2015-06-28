@@ -4,6 +4,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
@@ -339,8 +340,9 @@ public class TMSResource
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public List<ProjectTMS> getTMS(@PathParam("month") int month, @PathParam("year") int year,@PathParam("date") String date, @PathParam("username") String username )
+	public List<ProjectTMS> getTMS(@PathParam("month") int month, @PathParam("year") int year,@PathParam("date") int date, @PathParam("username") String username )
 	{
+		
 		UserTMS userTMS = tMSRepositoryDao.findByTmsDateAndUserName(date+"/"+month + "/" +year, username);
 		if(userTMS == null)
 		{
@@ -373,8 +375,15 @@ public class TMSResource
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	//month,:year,:date,:username
-	public CalendarData currentMonthCalendar(@PathParam("month") int month, @PathParam("year") int year,@PathParam("date") String date, @PathParam("username") String username )
+	public CalendarData currentMonthCalendar(@PathParam("month") int month, @PathParam("year") int year,@PathParam("date") int date, @PathParam("username") String username )
 	{
+		if(month == 0 && year == 0 && date == 0)
+		{
+			Calendar calendar =  Calendar.getInstance();
+			month = calendar.get(Calendar.MONTH);
+			year = calendar.get(Calendar.YEAR);
+			date = calendar.get(Calendar.DATE);
+		}
 		return calendarUtil.createCalendar(month, year, username);
 	}
 	

@@ -180,11 +180,16 @@ function ProjectController($scope, ProjectService) {
 
 
 
-function EditController($scope, $routeParams, $location, UserEditService) {
+function EditController($scope, $routeParams, $location, UserEditService, ProjectService) {
 
 	$scope.user = UserEditService.get({id: $routeParams.id});
 	$scope.error = false;
 	$scope.roless = ['user', 'admin'];
+	$scope.projectOptions = ProjectService.query();
+	if($scope.user.userProjectBilling == null || $scope.user.userProjectBilling == undefined)
+		{
+		$scope.user.userProjectBilling = [{projectId:null, hourlyRate:null, projectOwner:null}];
+		}
 	$scope.save = function() {
 		if ($scope.userForm.$valid)
 			{
@@ -200,6 +205,28 @@ function EditController($scope, $routeParams, $location, UserEditService) {
 		else
 			$scope.error = true;
 	};
+	$scope.moreproject = function() {
+		if($scope.user.userProjectBilling == null || $scope.user.userProjectBilling == undefined)
+			{
+			$scope.user.userProjectBilling = [{projectId:null, hourlyRate:null, projectOwner:null}];
+			}
+		else
+			{
+		$scope.user.userProjectBilling.push({projectId:null, hourlyRate:null, projectOwner:null});
+			}
+		
+};
+$scope.populatePrjOwner = function(prgbilling) {
+	
+	for(var i=0; i <$scope.projectOptions.length; i++)
+		{
+		  if(prgbilling.projectId == $scope.projectOptions[i].id)
+			  {
+			  prgbilling.projectOwner = $scope.projectOptions[i].projectOwner;
+			  }
+		}
+	
+};
 };
 
 
@@ -209,7 +236,7 @@ function EditProjectController($scope, $routeParams, $location, ProjectEditServi
 	
 	
 		
-	$scope.projectResources = ListUserService.query();
+	//$scope.projectResources = ListUserService.query();
 	$scope.projectActivities = ProjectActivityService.query();
 	$scope.project = ProjectEditService.get({id: $routeParams.id});
 	$scope.error = false;
@@ -245,9 +272,11 @@ function CreateController($scope, $location, UserEditService) {
 	};
 };
 
-function CreateUserController($scope, $location, NewUserService) {
+function CreateUserController($scope, $location, NewUserService, ProjectService) {
 	
 	$scope.user = new NewUserService();
+	$scope.user.userProjectBilling = [{projectId:null, hourlyRate:null, projectOwner:null}];
+	$scope.projectOptions = ProjectService.query();
 	$scope.user.roles= [];
 	$scope.error = false;
 	$scope.roless = ['user', 'admin'];
@@ -261,18 +290,35 @@ function CreateUserController($scope, $location, NewUserService) {
 		else
 			$scope.error = true;
 	};
+	$scope.moreproject = function() {
+		
+			$scope.user.userProjectBilling.push({projectId:null, hourlyRate:null, projectOwner:null});
+			
+	};
+	$scope.populatePrjOwner = function(prgbilling) {
+		
+		for(var i=0; i <$scope.projectOptions.length; i++)
+			{
+			  if(prgbilling.projectId == $scope.projectOptions[i].id)
+				  {
+				  prgbilling.projectOwner = $scope.projectOptions[i].projectOwner;
+				  }
+			}
+		
+	};
+
 };
 
 function AddProjectController($scope, $location, NewProjectService, ProjectActivityService, ListUserService) {
 	
 	$scope.project = new NewProjectService();
 	
-	$scope.projectResources = ListUserService.query();
+	//$scope.projectResources = ListUserService.query();
 	$scope.projectActivities = ProjectActivityService.query();
 	
 	//need to retrieve these values from rest services.
 	//
-	$scope.project.projectResources = [];
+	//$scope.project.projectResources = [];
 	$scope.project.projectActivities = [];
 	$scope.error = false;
 	//$scope.roless = ['user', 'admin'];
@@ -292,9 +338,7 @@ function AddProjectController($scope, $location, NewProjectService, ProjectActiv
 
 function MonthlyTMSController($scope,$rootScope, $location, MonthlyTMSService) {
 	
-	var date = new Date();
-   //month,:year,:date,:username
-	//();
+	
     $scope.tab = 'addtms';
     
     $scope.monthOptions = [{monthno:0, monthname:'January'},{monthno:1, monthname:'February'},{monthno:2, monthname:'March'},{monthno:3, monthname:'April'},{monthno:4, monthname:'May'},{monthno:5, monthname:'June'},{monthno:6, monthname:'July'},{monthno:7, monthname:'August'},{monthno:8, monthname:'September'},{monthno:9, monthname:'October'},{monthno:10, monthname:'Novemeber'},{monthno:11, monthname:'December'}];
@@ -312,7 +356,8 @@ function MonthlyTMSController($scope,$rootScope, $location, MonthlyTMSService) {
     	$scope.calendar = MonthlyTMSService.get({month: $scope.month, year:2015, date:1, username:$rootScope.user.name});
     	
     };
-	$scope.calendar = MonthlyTMSService.get({month: date.getMonth(), year:date.getFullYear(), date:date.getDate(), username:$rootScope.user.name});
+	$scope.calendar = MonthlyTMSService.get({month: 0, year:0, date:0, username:$rootScope.user.name});
+	$scope.month = $scope.calendar.monthNo;
 	
 	
 	};

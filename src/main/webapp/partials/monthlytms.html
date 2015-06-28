@@ -7,7 +7,7 @@
         <ul class="nav nav-pills">
             <li ng-class="{active:isSet('addtms')}"><a href ng-click="setTab('addtms')">Day</a></li>
             <li ng-class="{active:isSet('month')}"><select data-ng-model="month" ng-change="change();">
-            <option ng-repeat='opt in monthOptions' value='{{opt.monthno}}'>{{opt.monthname}}</option>
+            <option ng-repeat='opt in monthOptions'  ng-selected="if({month}} == {{opt.monthno}}){true;}" value='{{opt.monthno}}'>{{opt.monthname}}</option>
             </select></li>
             <li ng-class="{active:isSet('addweektms')}"><a href ng-click="setTab('addweektms')">Week</a></li>
         </ul>

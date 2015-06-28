@@ -29,7 +29,33 @@
 		<div class="form-group">
 		<label class="control-label col-sm-2" for="projectEntries">Project*</label>
 		<div class="col-sm-10">
-		    <dropdown-multiselect pre-selected="user.projects"  model="user.projects" options="projectEntries"></dropdown-multiselect>
+		    
+		    <table class="table">
+		
+		<tr>
+		<th>Project Name*</th>
+		<th>Hourly Rate*</th>
+	    </tr>
+		
+		<tr ng-repeat='utms in user.userProjectBilling'>
+		
+		   <td>
+			<select data-ng-model="utms.projectId" ng-change="populatePrjOwner(utms);">
+            <option ng-repeat='opt in projectOptions' value='{{opt.id}}'>{{opt.projectName}}</option>
+            </select>
+		   </td>
+		
+		   <td>
+				<input ng-model="utms.hourlyRate" id="hourlyRate" class="form-control" value={{utms.hourlyRate}} required/>
+		  	</td>
+		  
+		</tr>
+	
+	</table>
+		    
+		    
+		    
+		    
 		</div>
 		</div>
 		</div>
@@ -37,7 +63,7 @@
 	
 	<div class="form-group">
 		<div class="col-sm-10 col-sm-offset-2">
-			<button type="submit" class="btn btn-primary" ng-click="save()"><span class="glyphicon glyphicon-ok"></span> Save</button>
+			<button type="submit" class="btn btn-primary" ng-click="moreproject()"><span class="glyphicon glyphicon-ok"></span> Add More Project</button><button type="submit" class="btn btn-primary" ng-click="save()"><span class="glyphicon glyphicon-ok"></span> Save</button>
 		</div>
 	</div>
 </form>
