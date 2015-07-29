@@ -55,6 +55,10 @@ var exampleApp = angular.module('exampleApp', ['ngRoute', 'ngCookies', 'exampleA
 				templateUrl: 'partials/project.html',
 				controller: ProjectController
 			});
+			$routeProvider.when('/report',{
+				templateUrl: 'partials/report.html',
+				controller: 'ProjectReportController'
+			});
 			$routeProvider.when('/pointyPieChart',
 			        {
 			            templateUrl: 'partials/PieChart.html',

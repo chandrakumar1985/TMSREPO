@@ -1,0 +1,69 @@
+<div class="page-header">
+	<h3>Report TMS for Date Month: </h3>
+</div>
+<div ng-show="error">
+		Please fill the mandatory fields.
+</div>
+
+<div class="container">
+    <section>
+        <ul class="nav nav-pills">
+            <li>Select Project:
+            <select data-ng-model="projectid">
+            <option ng-repeat='opt1 in projectOptions'  value='{{opt1.id}}'>{{opt1.projectName}}</option>
+            </select>
+            </li>
+            <li>Select type of Report:
+            <select data-ng-model="reportType">
+            <option ng-repeat='opt in reportOptions' value='{{opt}}'>{{opt}}</option>
+            </select>
+            </li>
+            
+            <li>Select Month:
+            <select data-ng-model="month">
+            <option ng-repeat='opt in monthOptions'  value='{{opt.id}}'>{{opt.label}}</option>
+            </select>
+            </li>
+            
+            <li>Select Year:
+            <select data-ng-model="year">
+            <option ng-repeat='opt in yearOptions'  value='{{opt.id}}'>{{opt.label}}</option>
+            </select>
+            </li>
+            </ul>
+        
+        <div class="form-group">
+		
+		<div class="col-sm-10 col-sm-offset-2">
+			 <button type="submit" class="btn btn-primary" ng-click="displayReport()"><span class="glyphicon glyphicon-ok"></span> Generate Report</button> 
+		</div>
+	</div>
+        
+    </section>
+</div>
+
+
+<form class="form-horizontal" name="tmsForm">
+		
+	<table class="table">
+		
+		<tr>
+		<th>Resource name</th>
+		<th>No Of Billable Hours</th>
+		<th>Max Billable Hours</th>
+		<th>Hourly Rate</th>
+		<th>Amount In $</th>
+	    </tr>
+		
+		<tr ng-repeat='report in projectReport'>
+		<td>{{report.resourceName}}</td>
+		<td>{{report.actualBillableHours}}</td>
+		<td>{{report.maxBillableHours}}</td>
+		<td>{{report.hourlyRate}}</td>
+		<td>{{report.totalAmountGenerated}}</td>
+		  
+		</tr>
+	
+	</table>
+	
+</form>
