@@ -38,5 +38,15 @@ public class ProjectActivity
 	
 	private String activityDesc;
 	
+	private boolean isBillable;
+
+	public boolean isBillable() {
+		return isBillable;
+	}
+
+	public void setBillable(boolean isBillable) {
+		this.isBillable = isBillable;
+	}
+	
 
 }

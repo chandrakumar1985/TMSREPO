@@ -33,8 +33,14 @@ import com.accion.tms.JsonViews;
 import com.accion.tms.entity.Project;
 import com.accion.tms.entity.ProjectActivity;
 import com.accion.tms.entity.ProjectReport;
+import com.accion.tms.entity.ProjectTMS;
+import com.accion.tms.entity.UserProjectBilling;
+import com.accion.tms.entity.UserTMS;
 import com.accion.tms.repository.user.ProjectActivityRepositoryDao;
 import com.accion.tms.repository.user.ProjectRepositoryDao;
+import com.accion.tms.repository.user.TMSRepositoryDao;
+import com.accion.tms.repository.user.UserRepositoryDao;
+import com.accion.tms.entity.User;
 
 
 @Component
@@ -48,7 +54,13 @@ public class ProjectReportResource
 	private ProjectRepositoryDao projectRepositoryDao;
 	
 	@Autowired
+	private UserRepositoryDao userRepositoryDao;
+	
+	@Autowired
 	private ProjectActivityRepositoryDao projectActivityRepositoryDao;
+	
+	@Autowired
+	private TMSRepositoryDao tMSRepositoryDao;
 	
 	@Autowired
 	private ObjectMapper mapper;
@@ -62,9 +74,75 @@ public class ProjectReportResource
 	@Path("getprojectreport/{month}/{year}/{day}/{projectid}")
 	public List<ProjectReport> getProjectReport(@PathParam("month") String month, @PathParam("year") String year, @PathParam("day") String day, @PathParam("projectid") String projectid)
 	{
+		Project prj = projectRepositoryDao.findById(projectid);
+		UserProjectBilling userPrjBilling = null; 
+		int maxBillableHours = 180;
+		int actualBillableHours = 0;
+		ProjectTMS projectTMS = null;
+		ProjectReport projectReport = null;
+		boolean isCreateReport = false;
+		
+		List<ProjectReport> reportList = new ArrayList<ProjectReport>();
+		for(String id : prj.getProjectResources())
+		{
+			actualBillableHours = 0;
+			projectTMS = null;
+			projectReport = null;
+			userPrjBilling = null;
+			isCreateReport = false;
+			User user = this.userRepositoryDao.findById(id);
+			if(user == null)
+				continue;
+			if( user.getUserProjectBilling()!= null)
+			{
+				for(UserProjectBilling pBilling : user.getUserProjectBilling())
+				{
+					if(prj.getId().equals(pBilling.getProjectId()))
+					{
+					userPrjBilling =  pBilling;
+					break;
+					}
+				}
+			}
+			List<UserTMS> userTMSList= tMSRepositoryDao.findByMonthAndYearAndUserName(month,year, user.getUsername());
+		    for(UserTMS userTMS : userTMSList)
+		    {
+		    	for(ProjectTMS prjTMS : userTMS.getProjectTMS())
+		    	{
+		    		if(prj.getProjectName().equals(prjTMS.getProjectName()))
+		    		{
+		    			projectTMS = prjTMS;
+		    			ProjectActivity prjActivity = null;
+		    			if(projectTMS.getActivityName() != null)
+		    			{
+		    				isCreateReport = true;
+		    				prjActivity = projectActivityRepositoryDao.findByName(projectTMS.getActivityName());
+		    			}
+		    			if(prjActivity != null && prjActivity.isBillable())
+		    			{
+		    			actualBillableHours += projectTMS.getNoOfHours();
+		    			break;
+		    			}
+		    			
+		    		}
+		    	}
+		    }
+		    if(isCreateReport)
+		    {
+		    projectReport = new ProjectReport();
+		    projectReport.setResourceName(user.getUsername());
+		    projectReport.setHourlyRate(userPrjBilling.getHourlyRate());
+		    projectReport.setMaxBillableHours(maxBillableHours);
+		    projectReport.setActualBillableHours(actualBillableHours);
+		    projectReport.setTotalAmountGenerated(projectReport.getActualBillableHours()*projectReport.getHourlyRate());
+		    reportList.add(projectReport);
+		    }
+		}
+		
+		
 		//rest/report/getprojectreport/:month/:year/:date/:projectid', {month: month, year:year,date:date, projectid:projectid
-	 List<ProjectReport> reportList = new ArrayList<ProjectReport>();
-	 ProjectReport pr1 = new ProjectReport();
+	 
+	 /**ProjectReport pr1 = new ProjectReport();
 	 pr1.setResourceName("hanu");
 	 pr1.setHourlyRate(10);
 	 pr1.setMaxBillableHours(160);
@@ -102,7 +180,7 @@ public class ProjectReportResource
 	 pr5.setMaxBillableHours(160);
 	 pr5.setActualBillableHours(140);
 	 pr5.setTotalAmountGenerated(pr5.getActualBillableHours()*pr5.getHourlyRate());
-	 reportList.add(pr5);
+	 reportList.add(pr5);**/
 	 
 	 return reportList;
 	}

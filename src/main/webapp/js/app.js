@@ -36,7 +36,7 @@ var exampleApp = angular.module('exampleApp', ['ngRoute', 'ngCookies', 'exampleA
 			});
 			$routeProvider.when('/monthlytms', {
 				templateUrl: 'partials/monthlytms.html',
-				controller: MonthlyTMSController
+				controller: 'MonthlyTMSController'
 			});
 			$routeProvider.when('/approvetms', {
 				templateUrl: 'partials/approvetms.html',
@@ -339,32 +339,6 @@ function AddProjectController($scope, $location, NewProjectService, ProjectActiv
 };
 
 
-
-function MonthlyTMSController($scope,$rootScope, $location, MonthlyTMSService) {
-	
-	
-    $scope.tab = 'addtms';
-    
-    $scope.monthOptions = [{monthno:0, monthname:'January'},{monthno:1, monthname:'February'},{monthno:2, monthname:'March'},{monthno:3, monthname:'April'},{monthno:4, monthname:'May'},{monthno:5, monthname:'June'},{monthno:6, monthname:'July'},{monthno:7, monthname:'August'},{monthno:8, monthname:'September'},{monthno:9, monthname:'October'},{monthno:10, monthname:'Novemeber'},{monthno:11, monthname:'December'}];
-
-    $scope.setTab = function (tabId) {
-    	$scope.tab = tabId;
-    };
-
-    $scope.isSet = function (tabId) {
-        return $scope.tab === tabId;
-    };
-    
-    $scope.change = function()
-    {
-    	$scope.calendar = MonthlyTMSService.get({month: $scope.month, year:2015, date:1, username:$rootScope.user.name});
-    	
-    };
-	$scope.calendar = MonthlyTMSService.get({month: 0, year:0, date:0, username:$rootScope.user.name});
-	$scope.month = $scope.calendar.monthNo;
-	
-	
-	};
 function ApproveTMSController($scope,$rootScope, $location,$routeParams, TMSApprovalService, TMSApprovalUpdateService) {
 	
 	$scope.tms = new TMSApprovalUpdateService();
@@ -815,11 +789,4 @@ services.factory('TMSApprovalUpdateService', function($resource) {
 	
 	return $resource('rest/tms/update');
 });
-
-
-services.factory('MonthlyTMSService', function($resource) {
-	
-	return $resource('rest/tms/currentmonthcalendar/:month/:year/:date/:username',{month: '@month',year:'@year', date:'@date', username:'@username' } );
-});
-
 

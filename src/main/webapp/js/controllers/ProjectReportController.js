@@ -9,9 +9,9 @@ exampleApp.controller('ProjectReportController', ['$scope','$rootScope',  'Proje
 	$scope.projectReport = [];
 	
 	$scope.reportOptions =['By Month', 'By Year', 'By Date'];
-	$scope.monthOptions = [{id:1, label:'January'}, {id:2, label:'February'}, {id:3, label:'March'}, {id:4, label:'April'},
-	{id:5, label:'May'}, {id:6, label:'June'},{id:7, label:'July'}, {id:8, label:'August'},
-	,{id:9, label:'Septemeber'}, {id:10, label:'October'}, {id:11, label:'November'}, {id:12, label:'December'}];
+	$scope.monthOptions = [{id:0, label:'January'}, {id:1, label:'February'}, {id:2, label:'March'}, {id:2, label:'April'},
+	{id:4, label:'May'}, {id:5, label:'June'},{id:6, label:'July'}, {id:7, label:'August'},
+	{id:8, label:'Septemeber'}, {id:9, label:'October'}, {id:10, label:'November'}, {id:11, label:'December'}];
 	$scope.yearOptions = [{id:'2014',label:'2014'},{id:'2015',label:'2015'}];
     
 	

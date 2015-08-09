@@ -133,9 +133,9 @@ public class TMSResource
 					projectTMS.setTmsDate(Integer.parseInt(weeklyProjectTMSVo.getStartDate().split("/")[0])+"/" + (Integer.parseInt(weeklyProjectTMSVo.getStartDate().split("/")[1])-1)+"/" +weeklyProjectTMSVo.getStartDate().split("/")[2]);
 					if(weeklyProjectTMSVo.getStartDate()!= null)
 					{
-						secondDayTMS.setDay(Integer.parseInt(weeklyProjectTMSVo.getStartDate().split("/")[0])+"");
-						secondDayTMS.setMonth((Integer.parseInt(weeklyProjectTMSVo.getStartDate().split("/")[1])-1)+"");
-						secondDayTMS.setYear(weeklyProjectTMSVo.getStartDate().split("/")[2]);
+						firstDayTMS.setDay(Integer.parseInt(weeklyProjectTMSVo.getStartDate().split("/")[0])+"");
+						firstDayTMS.setMonth((Integer.parseInt(weeklyProjectTMSVo.getStartDate().split("/")[1])-1)+"");
+						firstDayTMS.setYear(weeklyProjectTMSVo.getStartDate().split("/")[2]);
 					}
 					firstDayTMS.setTmsDate(Integer.parseInt(weeklyProjectTMSVo.getStartDate().split("/")[0])+"/" + (Integer.parseInt(weeklyProjectTMSVo.getStartDate().split("/")[1])-1)+"/" +weeklyProjectTMSVo.getStartDate().split("/")[2]);
 					projectTMS.setActivityName(weeklyProjectTMSVo.getActivityName());

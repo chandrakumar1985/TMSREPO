@@ -9,6 +9,6 @@ public interface UserRepositoryDao extends CrudRepository<User, String> {
 	
 	
 	public User findByUsername(String username);
-	public User findById(String id);
+	public User findById(String _id);
 
 }

@@ -1,6 +1,7 @@
 package com.accion.tms.repository;
 
 
+import java.util.List;
 import java.util.UUID;
 
 import javax.annotation.Resource;
@@ -10,6 +11,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import com.accion.tms.entity.ProjectActivity;
 import com.accion.tms.entity.User;
 import com.accion.tms.repository.user.ProjectActivityRepositoryDao;
+import com.accion.tms.repository.user.TMSProjectRepositoryDao;
 import com.accion.tms.repository.user.TMSRepositoryDao;
 import com.accion.tms.repository.user.UserRepositoryDao;
 
@@ -27,6 +29,9 @@ public class DataBaseInitializer
 	
 	@Resource
 	private TMSRepositoryDao tMSRepositoryDao;
+	
+	@Resource
+	TMSProjectRepositoryDao tMSProjectRepositoryDao;
 	
 	@Resource
 	private ProjectActivityRepositoryDao projectActivityRepositoryDao;
@@ -51,7 +56,7 @@ public class DataBaseInitializer
 
 	public void initDataBase()
 	{
-		this.userRepositoryDao.deleteAll();
+		/**this.userRepositoryDao.deleteAll();
 		this.tMSRepositoryDao.deleteAll();
 		User userUser = new User("user", this.passwordEncoder.encode("user"));
 		userUser.addRole("user");
@@ -74,10 +79,20 @@ public class DataBaseInitializer
 		adminUser1.addRole("admin");
 		adminUser1.setId(UUID.randomUUID().toString());
 		this.userRepositoryDao.save(adminUser1);
-		
-		
-		this.projectActivityRepositoryDao.deleteAll();
-		ProjectActivity projectActivity = new ProjectActivity();
+		**/
+		tMSRepositoryDao.deleteAll();
+		tMSProjectRepositoryDao.deleteAll();
+		/**
+		List<ProjectActivity> prjList = (List<ProjectActivity>)this.projectActivityRepositoryDao.findAll();
+		for(ProjectActivity prj :prjList)
+		{
+			if(!prj.getName().equals("Leave"))
+			{
+			prj.setBillable(true);
+			this.projectActivityRepositoryDao.save(prj);
+			}
+		}**/
+		/**ProjectActivity projectActivity = new ProjectActivity();
 		projectActivity.setActivityDesc("Leave activity");
 		projectActivity.setName("Leave");
 		projectActivity.setId(UUID.randomUUID().toString());
@@ -99,7 +114,7 @@ public class DataBaseInitializer
 		projectActivity3.setActivityDesc("Functional Testing activity");
 		projectActivity3.setName("Functional Testing");
 		projectActivity3.setId(UUID.randomUUID().toString());
-		this.projectActivityRepositoryDao.save(projectActivity3);
+		this.projectActivityRepositoryDao.save(projectActivity3);**/
 		
 	}
 
